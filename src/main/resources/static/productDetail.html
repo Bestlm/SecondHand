@@ -28,7 +28,8 @@
                 <input type="hidden" value="1"  name="entityId" class="n_ipt"/>
 <!--                商品名字-->
                 <p><span th:text="${productDetail.name}"></span></p>
-                “开业巨惠，北京专柜直供”，不光低价，“真”才靠谱！
+                <!-- 商品一句话描述-->
+                <b th:text="${productDetail.description}" ></b>
             </div>
             <div class="des_price">
                 本店价格：<b th:text="${productDetail.price}" ></b>
@@ -92,7 +93,7 @@
                         <li><a href="#p_details">商品详情</a></li>
                     </ul>
                 </div>
-                <div class="des_con" id="p_attribute">
+                <!--<div class="des_con" id="p_attribute">
                     <table border="0" align="center" style="width:100%; font-family:'宋体'; margin:10px auto;"
                            cellspacing="0" cellpadding="0">
                         <tr>
@@ -114,6 +115,10 @@
                             <td>&nbsp;</td>
                         </tr>
                     </table>
+                </div>-->
+                <!-- 商品属性  暂定用商品描述代替-->
+                <div class="des_con">
+                    <b th:text="${productDetail.description}" ></b>
                 </div>
             </div>
             <div class="des_border" id="p_details">
