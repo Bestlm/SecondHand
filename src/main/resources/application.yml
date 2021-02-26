@@ -1,0 +1,30 @@
+spring:
+  thymeleaf:
+    #Thymeleaf 前缀/static/   后缀.html
+    prefix: classpath:/static/
+    suffix: .html
+    cache: false
+
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/db1?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8
+    username: root
+    password: 123456
+
+
+server:
+  port: 8090
+  servlet:
+    application-display-name: /wu
+
+mybatis-plus:
+  type-aliases-package: com.wu.entity
+  configuration:
+    #日志打印
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    map-underscore-to-camel-case: true
+  typeEnumsPackage: com.wu.enums
+
+
+
