@@ -10,9 +10,9 @@
     div, table {
         margin: 0 auto;
     }
-
+/* 二级三级分类的字体颜色*/
     a {
-        color: #555555;
+        color: #666666;;
         text-decoration: none;
         cursor: pointer;
     }
@@ -668,12 +668,12 @@
         color: #ff4e00;
         z-index: 800px;
     }
-
+/* 分类的背景颜色*/
     .leftNav .zj {
         width: 989px;
         height: 411px;
         overflow: hidden;
-        background-color: #FFF;
+        background-color: #FFFFFF;
         position: absolute;
         left: 210px;
         top: 0;
