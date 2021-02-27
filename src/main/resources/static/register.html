@@ -29,11 +29,6 @@
                     </tr>
 
                     <tr height="50">
-                        <td align="right"><font color="#ff4e00">*</font> &nbsp;</td>
-                        <td th:text="${error}" color="red"></td>
-                    </tr>
-
-                    <tr height="50">
                         <td align="right"><font color="#ff4e00">*</font>&nbsp;密码 &nbsp;</td>
                         <td><input type="password" value="" name="password" class="l_pwd" pattern="^[a-zA-Z0-9]{6,10}$" title="密码由6-10位字母和数组组成" required/></td>
                     </tr>
@@ -60,6 +55,10 @@
                     <tr height="50">
                         <td align="right">&nbsp;手机 &nbsp;</td>
                         <td><input type="text" value="" name="mobile" class="l_tel" pattern="^(13|15|18)\d{9}$" title="请输入正确的手机" required/></td>
+                    </tr>
+                    <tr height="50">
+                        <td align="right"><font color="#ff4e00">*</font> &nbsp;</td>
+                        <td th:text="${error}" color="red"></td>
                     </tr>
                     <tr height="60">
                         <td>&nbsp;</td>

@@ -37,6 +37,7 @@ public class User implements Serializable {
       /**
      * 登录名
      */
+      @TableField("login_name")
       private String loginName;
 
       /**

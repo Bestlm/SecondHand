@@ -22,7 +22,7 @@ public class Main {
         dataSourceConfig.setDriverName("com.mysql.cj.jdbc.Driver");
         dataSourceConfig.setUsername("root");
         dataSourceConfig.setPassword("123456");
-        dataSourceConfig.setUrl("jdbc:mysql://localhost:3306/db1?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=UTF-8");
+        dataSourceConfig.setUrl("jdbc:mysql://106.53.145.182:3306/db1?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=UTF-8");
         autoGenerator.setDataSource(dataSourceConfig);
         GlobalConfig globalConfig = new GlobalConfig();
         globalConfig.setOpen(true);

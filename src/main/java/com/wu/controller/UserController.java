@@ -2,10 +2,20 @@ package com.wu.controller;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.wu.entity.ResultInfo;
 import com.wu.entity.User;
+import com.wu.enums.GenderEnum;
+import com.wu.enums.ResultEnum;
 import com.wu.service.CartService;
 import com.wu.service.UserAddressService;
 import com.wu.service.UserService;
+import com.wu.utils.MD5Util;
+import com.wu.vo.UserVO;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,11 +23,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+import sun.rmi.runtime.Log;
 
 import javax.servlet.http.HttpSession;
 //针对User的控制类
 @Controller
 @RequestMapping("/user")
+@Slf4j
 public class UserController {
 
 
@@ -29,8 +41,8 @@ public class UserController {
 
     //1.登录功能
     @PostMapping("/login")
-    public String login(String loginName, String password, HttpSession session){
-        QueryWrapper queryWrapper = new QueryWrapper();
+    public ModelAndView login(String loginName, String password, HttpSession session){
+       /* QueryWrapper queryWrapper = new QueryWrapper();
         queryWrapper.eq("login_name",loginName);
         queryWrapper.eq("password",password);
         User user = userService.getOne(queryWrapper);
@@ -39,7 +51,26 @@ public class UserController {
         }else{
             session.setAttribute("user",user);
             return "redirect:/ProductCategory/list";
+        }*/
+       ModelAndView modelAndView=new ModelAndView();
+        UsernamePasswordToken token=new UsernamePasswordToken(loginName,password);
+        Subject subject = SecurityUtils.getSubject();
+        try {
+            subject.login(token);
+        }catch (Exception ex){
+            modelAndView.addObject("error",ex.getMessage());
+            modelAndView.setViewName("login");
+            return modelAndView;
         }
+        User user=new User();
+        Object principal = SecurityUtils.getSubject().getPrincipal();
+        if(principal!=null){
+            BeanUtils.copyProperties(principal,user);
+        }
+        session.setAttribute("user",user);
+        modelAndView.addObject(new ResultInfo(1,"登录成功"));
+        modelAndView.setViewName("redirect:/ProductCategory/list");
+        return modelAndView;
     }
 
     //2.注销功能
@@ -49,20 +80,36 @@ public class UserController {
         return "login";
     }
 
-    //3.注册功能
+    /**
+     * 用户注册功能
+     */
     @PostMapping("/register")
-    public String register(User user, Model model){
+    public String register(UserVO uservo, Model model){
         QueryWrapper queryWrapper = new QueryWrapper();
+        log.info("uservo"+uservo.toString());
+        User user=new User();
+        BeanUtils.copyProperties(uservo,user);
+        log.info("user"+user.toString());
+        if(uservo.getGender().equals("男")){
+            user.setGender(GenderEnum.MAN);
+        }else {
+            user.setGender(GenderEnum.WOMAN);
+        }
         queryWrapper.eq("login_name",user.getLoginName());
         User user1 = userService.getOne(queryWrapper);
         if(user1!=null){
             model.addAttribute("error",user.getLoginName()+"已存在，请重新输入！");
             return "register";
         }else{
+            String password= user.getPassword();
+            String md5ofPassword = new MD5Util().getMD5ofStr(password);
+            user.setPassword(md5ofPassword);
+            log.info("password(MD5)"+md5ofPassword);
             boolean b = userService.save(user);
             if(b==true){
                 return "login";
             }else{
+                model.addAttribute("error","保存用户信息出错,请重新输入");
                 return "register";
             }
         }
