@@ -6,14 +6,18 @@ import com.wu.entity.User;
 import com.wu.service.CartService;
 import com.wu.service.ProductCategoryService;
 import com.wu.service.ProductService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import sun.net.httpserver.HttpsServerImpl;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,6 +26,7 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("/product")
+@Slf4j
 public class ProductController {
 
     @Autowired
@@ -49,11 +54,10 @@ public class ProductController {
         modelAndView.setViewName("productList");
         //通过种类的级别 查询所有商品
         modelAndView.addObject("productList",productService.findByCateGoryId(type,id));
-
         modelAndView.addObject("list",productCategoryService.getAllProductCategoryVo());
 
 
-        //6.参考productateGoryController下的listf方法
+        //获取用户 TODO  这里好像需要改一下  太麻烦了
         User user = (User) session.getAttribute("user");
         if(user==null){
             modelAndView.addObject("findAllCartVoList",new ArrayList<>());
@@ -64,7 +68,7 @@ public class ProductController {
         return modelAndView;
     }
 
-    //2.查看商品详情,根据商品名
+    //2.查看商品详情,根据商品ID
     @GetMapping("/detail/{id}")
     public ModelAndView findByOne(@PathVariable("id") Integer id,HttpSession session){
         ModelAndView modelAndView = new ModelAndView();
@@ -102,5 +106,75 @@ public class ProductController {
         }
         return modelAndView;
     }
+
+
+    @GetMapping("/detailselect")
+    public ModelAndView findByKeyWord(HttpSession session, HttpServletRequest request, HttpServletResponse response){
+        String keyWord = request.getParameter("keyWord");
+        ModelAndView modelAndView=new ModelAndView();
+        modelAndView.setViewName("productList");
+        //通过种类的级别 查询所有商品
+        modelAndView.addObject("productList",productService.findByKeyWord(keyWord));
+        modelAndView.addObject("list",productCategoryService.getAllProductCategoryVo());
+
+        //获取用户 TODO  这里好像需要改一下  太麻烦了
+        User user = (User) session.getAttribute("user");
+        if(user==null){
+            modelAndView.addObject("findAllCartVoList",new ArrayList<>());
+        }else{
+            modelAndView.addObject("findAllCartVoList",cartService.findAllCartVoByUserId(user.getId()));
+        }
+        return modelAndView;
+    }
+
+
+    /**
+     * 发布商品前的数据查找
+     * @param session
+     * @param request
+     * @param response
+     * @return
+     */
+    @GetMapping("/beforepublish")
+    public ModelAndView beforePublish(HttpSession session, HttpServletRequest request, HttpServletResponse response){
+        ModelAndView modelAndView=new ModelAndView();
+        modelAndView.setViewName("publish");
+        modelAndView.addObject("list",productCategoryService.getAllProductCategoryVo());
+        //查询所有的三级分类放在select标签中
+        modelAndView.addObject("type_3",productService.getProductCategory3());
+        //TODO 感觉购物车的数据应该查找出来存放到Session中
+        User user = (User) session.getAttribute("user");
+        if(user==null){
+            modelAndView.addObject("findAllCartVoList",new ArrayList<>());
+        }else{
+            modelAndView.addObject("findAllCartVoList",cartService.findAllCartVoByUserId(user.getId()));
+        }
+        return modelAndView;
+    }
+
+
+    /**
+     * 发布商品  开始保存
+     * @param session
+     * @param request
+     * @param response
+     * @param insert_product
+     * @return
+     */
+    @PostMapping("/publish")
+    public ModelAndView publish(HttpSession session, HttpServletRequest request, HttpServletResponse response,Product insert_product){
+        log.info("准备保存的商品"+insert_product.toString());
+        ModelAndView modelAndView=new ModelAndView();
+
+        //TODO  2.27号夜晚  这里发布商品没有做完  yaorong
+
+        modelAndView.setViewName("publish");
+        return modelAndView;
+    }
+
+
+
+
+
 
 }

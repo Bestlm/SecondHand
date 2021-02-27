@@ -1,8 +1,11 @@
 package com.wu.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.wu.entity.Product;
+import com.wu.entity.ProductCategory;
 import com.wu.entity.User;
+import com.wu.mapper.ProductCategoryMapper;
 import com.wu.mapper.ProductMapper;
 import com.wu.mapper.UserMapper;
 import com.wu.service.ProductService;
@@ -25,6 +28,8 @@ import java.util.Map;
 @Service
 public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> implements ProductService {
 
+    @Autowired
+    private ProductCategoryMapper productCategoryMapper;
 
     @Autowired
     private ProductMapper productMapper;
@@ -36,4 +41,34 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
         List<Product> productList = productMapper.selectByMap(map);
         return productList;
     }
+
+    @Override
+    public List<Product> findByKeyWord(String KeyWord) {
+        QueryWrapper<Product> queryWrapper=new QueryWrapper<Product>();
+        queryWrapper.like("name",KeyWord);
+        List<Product> products = baseMapper.selectList(queryWrapper);
+        return products;
+    }
+
+    /**
+     * 获取所有的种类3
+     * @return
+     */
+    @Override
+    public List<ProductCategory> getProductCategory3() {
+        QueryWrapper<ProductCategory> queryWrapper=new QueryWrapper<ProductCategory>();
+        queryWrapper.eq("type",3);
+        List<ProductCategory> productCategories3 = productCategoryMapper.selectList(queryWrapper);
+        return productCategories3;
+    }
+
+    @Override
+    public Product findByTypeThree(Integer categorylevelthreeId) {
+        QueryWrapper<Product> queryWrapper=new QueryWrapper();
+        queryWrapper.eq("categorylevelthree_id",categorylevelthreeId);
+        Product product = baseMapper.selectOne(queryWrapper);
+        return product;
+    }
+
+
 }

@@ -6,6 +6,7 @@ spring:
     cache: false
 
 
+#106.53.145.182:3306服务器IP
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://106.53.145.182:3306/db1?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8

@@ -2,8 +2,8 @@
 
 <!-- js+css  其实这里我觉得应该加上文件路径 ContextpathXXXX-->
 <div th:fragment="source">
-    <script type="text/javascript" src="/js/jquery-1.8.3.min.js"></script>
-    <link type="text/css" rel="stylesheet" href="/css/style.css"/>
+    <script type="text/javascript" th:src="@{/js/jquery-1.8.3.min.js}"></script>
+    <link type="text/css" rel="stylesheet" th:href="@{/css/style.css}"/>
 </div>
 
 <!-- 头部导航栏 -->
@@ -118,7 +118,7 @@
             <a href="/ProductCategory/list"><img src="/images/logo.png" style="width: 230px;border:0px solid red;"></a>
         </div>
         <div class="search">
-            <form action="/productList.html" method="post">
+            <form action="/product/detailselect" method="get">
                 <input type="text" name="keyWord" class="s_ipt">
                 <input type="submit" value="搜索" class="s_btn">
             </form>

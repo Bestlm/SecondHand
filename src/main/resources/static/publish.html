@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>商品发布</title>
+    <th:block th:include="common.html :: source"></th:block>
+</head>
+<body>
+
+<th:block th:include="common.html :: header"></th:block>
+<th:block th:include="common.html :: category"></th:block>
+
+<div class="log_bg">
+    <div class="top">
+        <div class="logo"></div>
+    </div>
+    <div class="login">
+        <div class="log_img"><img src="/images/l_img.png" width="611" height="425" /></div>
+        <div class="log_c">
+            <form action="/product/publish" method="post">
+                <table border="0" style="width:370px; font-size:14px; margin-top:30px;" cellspacing="0" cellpadding="0">
+                    <tr height="50" valign="top">
+                        <td width="55">&nbsp;</td>
+                        <td>
+                            <span class="fl" style="font-size:24px;">发布商品</span>
+                        </td>
+                    </tr>
+                    <tr height="70">
+                        <td>商品名字</td>
+                        <td><input type="text" name="name" id="name" class="l_user" required/></td>
+                    </tr>
+                    <tr height="70">
+                        <td>商品描述</td>
+                        <td><input type="text" name="description" id="description"  class="l_user" required/></td>
+                    </tr>
+                    <tr height="70">
+                        <td>商品库存</td>
+                        <td><input type="text" name="stock" id="stock"  class="l_user" required/></td>
+                    </tr>
+                    <tr height="70">
+                        <td>商品分类</td>
+                        <td>
+                            <select id="categorylevelthree_id" name="categorylevelthree_id" style="width:70px;height:28px;" th:each="type:${type_3}"  required>
+                                <option th:value="${type.id}"  th:text="${type.name}"></option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr height="60">
+                        <td>&nbsp;</td>
+                        <td><input type="submit" value="发布商品" class="log_btn" /></td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+    </div>
+</div>
+
+<th:block th:include="common.html :: footer"></th:block>
+<th:block th:include="common.html :: permit"></th:block>
+
+</body>
+</html>

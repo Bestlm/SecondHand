@@ -45,11 +45,12 @@ public class OrderController {
        //订单入库，并且将新地址也更新并入库
         orderService.save(order,user,address,remark);
 
-
         //15.这是settlement3页面用的数据，也就是查询订单数据库
         modelAndView.addObject("orderMsg",order);
         return modelAndView;
     }
+
+
     //18.这是进入第三个页面的 方法，开始跟order相关,下单操作,,这个最好封装起来，我没有封装，这是一个bug
     @GetMapping("/orderList")
     public ModelAndView orderList(HttpSession session){
