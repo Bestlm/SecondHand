@@ -1,7 +1,9 @@
 package com.wu.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.wu.entity.Product;
+import com.wu.entity.ResultInfo;
 import com.wu.entity.User;
 import com.wu.service.CartService;
 import com.wu.service.ProductCategoryService;
@@ -19,6 +21,7 @@ import sun.net.httpserver.HttpsServerImpl;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -142,7 +145,6 @@ public class ProductController {
         modelAndView.addObject("list",productCategoryService.getAllProductCategoryVo());
         //查询所有的三级分类放在select标签中
         modelAndView.addObject("type_3",productService.getProductCategory3());
-        //TODO 感觉购物车的数据应该查找出来存放到Session中
         User user = (User) session.getAttribute("user");
         if(user==null){
             modelAndView.addObject("findAllCartVoList",new ArrayList<>());
@@ -162,14 +164,29 @@ public class ProductController {
      * @return
      */
     @PostMapping("/publish")
-    public ModelAndView publish(HttpSession session, HttpServletRequest request, HttpServletResponse response,Product insert_product){
+    public void publish(HttpSession session, HttpServletRequest request, HttpServletResponse response,Product insert_product) throws IOException {
+        response.setContentType("application/json;charset=utf-8");
+        int categorylevelone_id = Integer.valueOf(request.getParameter("categorylevelone_id"));
+        int categoryleveltwo_id = Integer.valueOf(request.getParameter("categoryleveltwo_id"));
+        int categorylevelthree_id = Integer.valueOf(request.getParameter("categorylevelthree_id"));
+
+        insert_product.setCategoryleveloneId(categorylevelone_id);
+        insert_product.setCategoryleveltwoId(categoryleveltwo_id);
+        insert_product.setCategorylevelthreeId(categorylevelthree_id);
+
+        insert_product.setFileName("bk_3.jpg");
+
         log.info("准备保存的商品"+insert_product.toString());
-        ModelAndView modelAndView=new ModelAndView();
-
-        //TODO  2.27号夜晚  这里发布商品没有做完  yaorong
-
-        modelAndView.setViewName("publish");
-        return modelAndView;
+        ResultInfo info=new ResultInfo();
+        try{
+            productService.save(insert_product);
+            info.setCode(1);
+            info.setMsg("保存成功");
+        }catch (Exception ex){
+            info.setCode(0);
+            info.setMsg(ex.getMessage());
+        }
+        response.getWriter().write(JSON.toJSONString(info));
     }
 
 

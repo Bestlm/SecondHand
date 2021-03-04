@@ -48,7 +48,7 @@ public class ProductCategoryServiceImpl  implements ProductCategoryService {
         //把所有一级分类的ID和Name取出来 封装到VO对象里
         List<ProductCategoryVo> levelOneVo = levelOne.stream().map(e -> new ProductCategoryVo(e.getId(),e.getName())).collect(Collectors.toList());
 
-        // 完善VO对象   TODO  图片太多了  应该类型放在不同的文件夹中 方便查询和管理
+        // 完善VO对象
         for (int i = 0; i <levelOneVo.size() ; i++) {
             //对于一级类型 BannerImg是首页分类顶部的图片
             levelOneVo.get(i).setBannerImg("/images/banner"+i+".png");
@@ -95,5 +95,42 @@ public class ProductCategoryServiceImpl  implements ProductCategoryService {
             }
         }
         return levelOneVo;
+    }
+
+    /**
+     * 通过parentId的值查找到对应的所有的子分类
+     * @param parentId
+     * @return
+     */
+    @Override
+    public List<ProductCategory> selectProductCategoryByParentId(int parentId) {
+    QueryWrapper<ProductCategory> queryWrapper=new QueryWrapper<ProductCategory>();
+    queryWrapper.eq("parent_id",parentId);
+    List<ProductCategory> categories = productCategoryMapper.selectList(queryWrapper);
+    return categories;
+    }
+
+    @Override
+    public List<ProductCategory> SelectProductCategoryListOne() {
+        QueryWrapper<ProductCategory> queryWrapper=new QueryWrapper<>();
+        queryWrapper.eq("type",1);
+        List<ProductCategory> productCategories = productCategoryMapper.selectList(queryWrapper);
+        return productCategories;
+    }
+
+    @Override
+    public List<ProductCategory> SelectProductCategoryListThree() {
+        QueryWrapper<ProductCategory> queryWrapper=new QueryWrapper<>();
+        queryWrapper.eq("type",3);
+        List<ProductCategory> productCategories = productCategoryMapper.selectList(queryWrapper);
+        return productCategories;
+    }
+
+    @Override
+    public List<ProductCategory> SelectProductCategoryListTwo() {
+        QueryWrapper<ProductCategory> queryWrapper=new QueryWrapper<>();
+        queryWrapper.eq("type",2);
+        List<ProductCategory> productCategories = productCategoryMapper.selectList(queryWrapper);
+        return productCategories;
     }
 }

@@ -1,20 +1,29 @@
 package com.wu.controller;
 
+import com.alibaba.fastjson.JSON;
+import com.wu.entity.ProductCategory;
 import com.wu.entity.User;
 import com.wu.service.CartService;
 import com.wu.service.ProductCategoryService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 
 @Controller
 @RequestMapping("/ProductCategory")
+@Slf4j
 public class ProductCategoryController {
 
     @Autowired
@@ -50,5 +59,42 @@ public class ProductCategoryController {
 
     }
 
+    /**
+     * 三级联动中的通过父节点的id查找对应的子节点的信息
+     * @param request
+     * @param response
+     */
+    @GetMapping("/listCategory")
+    public void listCategory(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        response.setContentType("application/json;charset=utf-8");
+        String id = request.getParameter("id");
+        List<ProductCategory> categories;
+        log.info("id是"+id);
+        int parentId=0;
+        if(id==null||id.equals("")){
+            categories= new ArrayList<>();
+        }else {
+            parentId=Integer.valueOf(id);
+            categories=productCategoryService.selectProductCategoryByParentId(parentId);
+        }
+        String categoriesString= JSON.toJSONString(categories);
+        log.info("发布商品中查找到的商品种类"+categoriesString);
+        response.getWriter().write(categoriesString);
+    }
+
+    @GetMapping("/findType")
+    public void findTypeThree(HttpServletRequest request, HttpServletResponse response)throws IOException{
+        response.setContentType("application/json;charset=utf-8");
+        List<ProductCategory> productCategoriesOne = productCategoryService.SelectProductCategoryListOne();
+        List<ProductCategory> productCategoriesTwo= productCategoryService.SelectProductCategoryListTwo();
+        List<ProductCategory> productCategoriesThree = productCategoryService.SelectProductCategoryListThree();
+        HashMap<String,List<ProductCategory>> lists=new HashMap<>();
+        lists.put("one",productCategoriesOne);
+        lists.put("two",productCategoriesTwo);
+        lists.put("three",productCategoriesThree);
+        String jsonString = JSON.toJSONString(lists);
+        log.info("种类:"+jsonString);
+        response.getWriter().write(jsonString);
+    }
 
 }

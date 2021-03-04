@@ -18,4 +18,11 @@ public interface ProductCategoryService{
 
     public List<ProductCategoryVo> getAllProductCategoryVo();
 
+    List<ProductCategory> selectProductCategoryByParentId(int parentId);
+
+    List<ProductCategory> SelectProductCategoryListThree();
+
+    List<ProductCategory> SelectProductCategoryListOne();
+
+    List<ProductCategory> SelectProductCategoryListTwo();
 }
