@@ -4,13 +4,19 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <th:block th:include="common.html :: source"></th:block>
-    <script type="text/javascript" src="/js/productDetail.js"></script>
+
+    <th:block th:replace="common.html :: source"></th:block>
+<!--
+    <script type="text/javascript" th:src="@{/js/productDetail.js}"></script>
+-->
+
 </head>
 <body>
 
+
 <th:block th:include="common.html :: header"></th:block>
 <th:block th:include="common.html :: category" ></th:block>
+
 
 <div class="i_bg">
     <div class="postion">
@@ -69,16 +75,19 @@
             <br>
             <div class="des_join">
                 <div class="j_nums">
-                    <input type="text" id="quantity"   value="1"  name="quantity" class="n_ipt"/>
-                    <input type="button" value="" onclick="increase()" class="n_btn_1"/>
-                    <input type="button" value="" onclick="reduce()" class="n_btn_2"/>
+                    <input type="text" id="quantity"   value="0"  name="quantity" class="n_ipt"/>
+                    <input type="button" id="buttonIncrease" value="" class="n_btn_1"/>
+                    <input type="button"  id="buttonReduce" value=""  class="n_btn_2"/>
                 </div>
-                <input type="hidden" id="productId" value="1">
-                <input type="hidden" id="productPrice" value="1">
+                <input type="hidden" id="productId" th:value="${productDetail.id}">
+                <input type="hidden" id="productPrice" th:value="${productDetail.price}">
+                <input type="hidden" id="productStock" th:value="${productDetail.stock}">
                 <span class="fl">
-<!--                    我这里存在一个问题,就是我的前端没有去判断我传递的库存是否为零-->
-                     <img src="/images/j_car.png" th:onclick="'addCart('+${productDetail.id}+','+${productDetail.price}+','+${productDetail.stock}+')'"/>
+                    <!--加入购物车-->
+                     <img src="/images/j_car.png" id="addToCart" />
                 </span>
+
+                <div id="resultInfo"></div>
             </div>
         </div>
     </div>
@@ -142,4 +151,91 @@
 <th:block th:include="common.html :: permit"></th:block>
 
 </body>
+
+<script type="text/javascript">
+    $(function(){
+        //给type绑定点击事件
+        $(".type").click(function () {
+            var index = $(".type").index(this);
+            var obj = $(".type").eq(index);
+            $(".type").removeClass("checked");
+            obj.addClass("checked");
+        });
+        //给color绑定点击事件
+        $(".color").click(function () {
+            var index = $(".color").index(this);
+            var obj = $(".color").eq(index);
+            $(".color").removeClass("checked");
+            obj.addClass("checked");
+        });
+
+
+        $('#addToCart').bind('click',function () {
+            var stock = $("#productStock").val();
+            var productId = $("#productId").val();
+            var productPrice = $("#productPrice").val();
+            var quantity = $("#quantity").val();
+            //这里应该发送异步请求 而不是 直接跳转   ?id="+id+"&price="+price+"&quantity="+quantity+"&stock="+stock
+            //window.location.href="/cart/add/"+id+"/"+price+"/"+quantity+"/"+stock;
+            console.log("加入购物车");
+            $.ajax({
+                url:"/cart/add",
+                data:{stock:stock,productId:productId,productPrice:productPrice,quantity:quantity},
+                success:function (data) {
+                    console.log(data);
+                    if(data.code==1){
+                        Msg.success("添加购物车成功！");
+                        window.location.href="/product//detail/"+productId;
+                    }else{
+                        console.log(data);
+                        Msg.fail(data.msg)
+                    }
+                }
+            });
+        });
+
+
+        $('#buttonIncrease').bind('click',function () {
+            var value = $("#quantity").val();
+            var stock = $("#stock").text();
+            value++;
+            if(value > stock){
+                value = stock;
+            }
+            $("#quantity").val(value);
+        });
+
+/*        //商品数量++
+        function increase() {
+            var value = $("#quantity").val();
+            var stock = $("#stock").text();
+            value++;
+            if(value > stock){
+                value = stock;
+            }
+            $("#quantity").val(value);
+        }*/
+
+        $('#buttonReduce').bind('click',function () {
+            var value = $("#quantity").val();
+            value--;
+            if(value == 0){
+                value = 1;
+            }
+            $("#quantity").val(value);
+        })
+
+    /*    //商品数量--
+        function reduce() {
+            var value = $("#quantity").val();
+            value--;
+            if(value == 0){
+                value = 1;
+            }
+            $("#quantity").val(value);
+        }*/
+    });
+
+
+</script>
 </html>

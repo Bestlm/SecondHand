@@ -51,7 +51,7 @@ public class OrderController {
     }
 
 
-    //18.这是进入第三个页面的 方法，开始跟order相关,下单操作,,这个最好封装起来，我没有封装，这是一个bug
+    //这是进入第三个页面的 方法，开始跟order相关,下单操作,,这个最好封装起来，我没有封装，这是一个bug
     @GetMapping("/orderList")
     public ModelAndView orderList(HttpSession session){
         ModelAndView modelAndView = new ModelAndView();

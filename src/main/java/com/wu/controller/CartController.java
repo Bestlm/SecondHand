@@ -1,23 +1,32 @@
 package com.wu.controller;
 
 
+import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.wu.entity.Cart;
 import com.wu.entity.Order;
+import com.wu.entity.ResultInfo;
 import com.wu.entity.User;
 import com.wu.service.CartService;
 import com.wu.service.OrderService;
 import com.wu.service.UserAddressService;
 import com.wu.service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 //针对Cart的控制类
 @Controller
+@Slf4j
 @RequestMapping("/cart")
 public class CartController {
 
@@ -26,30 +35,50 @@ public class CartController {
     private CartService cartService;
 
     //加入购物车功能, 商品id,商品价格,总共价钱
-    //关于这个方法提交入口,在productDetail.js中
-    @GetMapping("/add/{productId}/{productPrice}/{quantity}")
-    public String addCart(@PathVariable("productId") Integer productId,
-                                @PathVariable("productPrice") Integer productPrice,
-                                @PathVariable("quantity") Integer quantity,HttpSession session){
-        ModelAndView modelAndView = new ModelAndView();
-        Cart cart = new Cart();
-        cart.setProductId(productId).setQuantity(quantity).setCost((float) (productPrice*quantity));
-       //这个地方我们去配一个过滤器,让没有登录的人返回到/ProductCateGroy/list页面,不能加入购物车
-        //过滤器名字UserFilter,还要写个config:FilterConfig,其实我们也可以用spring security只不过我不会
-        User user = (User) session.getAttribute("user");
-        cart.setUserId(user.getId());
-        //添加商品到购物车,并减库存,这里对save方法进行了重写
+    //关于这个方法提交入口,在productDetail.js中 @PathVariable("productId") Integer productId,
+    //                          @PathVariable("productPrice") Integer productPrice,
+    //                          @PathVariable("quantity") Integer quantity,
+    //                          @PathVariable("stock") Integer stock ,
+    //{productId}/{productPrice}/{quantity}/{stock}
+    @GetMapping("/add")
+    public void addCart(HttpSession session, HttpServletRequest request, HttpServletResponse response) throws IOException {
+        log.info("开始准备加入购物车");
+        Integer productId= Integer.valueOf(request.getParameter("productId"));
+        //Integer productPrice=Integer.valueOf(request.getParameter("productPrice"));
+        Float productPrice = Float.valueOf(request.getParameter("productPrice"));
+        Integer quantity=Integer.valueOf(request.getParameter("quantity"));
+        Integer stock=Integer.valueOf(request.getParameter("stock"));
 
-        //这是手动跑出异常,你看看save方法还有呢异常处理,吧这个try catch删除,save的就可以生效
-        try {
-            if(cartService.save(cart)){
-                return "redirect:/cart/findAllCartVo";
+        response.setContentType("application/json;charset=utf-8");
+        PrintWriter out=response.getWriter();
+
+        ResultInfo info=new ResultInfo();
+        if(stock<=0){
+            info.setCode(0);
+            info.setMsg("商品的库存不足！");
+            out .write(JSON.toJSONString(info));
+        }else {
+            Cart cart = new Cart();
+            cart.setProductId(productId).setQuantity(quantity).setCost((float) (productPrice * quantity));
+            //这个地方我们去配一个过滤器,让没有登录的人返回到/ProductCateGroy/list页面,不能加入购物车
+            //过滤器名字UserFilter,还要写个config:FilterConfig,其实我们也可以用spring security只不过我不会
+            User user = (User) session.getAttribute("user");
+            cart.setUserId(user.getId());
+            //添加商品到购物车,并减库存,这里对save方法进行了重写
+            try {
+                cartService.save(cart);
+                info.setCode(1);
+                info.setMsg("添加到购物车成功！");
+            } catch (Exception ex) {
+                info.setCode(0);
+                info.setMsg(ex.getMessage());
+            } finally {
+                out.write(JSON.toJSONString(info));
+                out.flush();
+                out.close();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "redirect:/ProductCategory/list";
         }
-        return null;
+
     }
 
     @GetMapping("/findAllCartVo")

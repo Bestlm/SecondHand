@@ -20,7 +20,7 @@ window.onload=function (ev) {
 
     //使用ajax来异步获取Json数据  但是vue中更加推荐使用axios
 $.ajax({
-    url:root+"/ProductCategory/findType",
+    url:"/ProductCategory/findType",
     async:false,
     success:function (data) {
         UnitRows=data.one;
@@ -31,7 +31,6 @@ $.ajax({
         console.log(UserRows);
     }
 });
-
 
 
 

@@ -1,17 +1,74 @@
 <html xmlns:th="http://www.thymeleaf.org">
-
-
 <div th:fragment="source">
     <link type="text/css" rel="stylesheet" th:href="@{/css/style.css}"/>
-    <link rel="stylesheet" th:href="@{/js/themes/default/easyui.css}">
-    <link rel="stylesheet" th:href="@{/js/themes/icon.css}">
+    <link rel="stylesheet" th:href="@{/js/themes/default/easyui.css}"/>
+    <link rel="stylesheet" th:href="@{/js/themes/icon.css}"/>
+    <link rel="stylesheet" th:href="@{/js/themes/MessageUtil.css}"/>
     <script th:src="@{/js/jquery.min.js}"></script>
     <script th:src="@{/js/jquery.easyui.min.js}"></script>
+    <script th:src="@{/js/MessageUtil.js}"/>
+    <input type="hidden" id="ctfhd" th:value="${#httpServletRequest.getContextPath()}" />
 
-    <input type="hidden" id="ctfhd" name="ctfhd"
-           th:value="${#httpServletRequest.getContextPath()}" />
+    <script type="text/javascript"> var root= $("#ctfhd").val();</script>
+
+
+
+</div>
+
+
+
+<!-- 商品分类 -->
+<div th:fragment="category">
+    <div class="menu_bg">
+        <div class="menu">
+            <div class="nav">
+                <div class="nav_t">全部商品分类</div>
+                <div class="leftNav">
+                    <ul>
+                        <li th:each="levelone:${list}">
+                            <div class="fj">
+                                <span class="n_img"></span> <span class="fl" th:text="${levelone.name}"></span>
+                            </div>
+                            <div class="zj">
+                                <div class="zj_l">
+                                    <div class="zj_l_c" th:each="leveltwo:${levelone.children}">
+                                        <h2>
+                                            <a th:href="'/product/list/two/'+${leveltwo.id}" th:text="${leveltwo.name}"></a>
+                                        </h2>
+                                        <a th:href="'/product/list/three/'+${levelthree.id}" th:each="levelthree:${leveltwo.children}" th:text="${levelthree.name}"></a>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <ul class="menu_r">
+                <li><a href="/ProductCategory/list">首页</a></li>
+                <li th:each="wu:${list}">
+                    <a th:href="'/product/list/one/'+${wu.id}" th:text="${wu.name}">一级分类</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
     <script type="text/javascript">
-        var root = $("#ctfhd").val();
+        $(function(){
+            //商品类目
+            $(".leftNav ul li").hover(
+                function(){
+                    $(this).find(".fj").addClass("nuw");
+                    $(this).find(".zj").show();
+                }
+                ,
+                function(){
+                    $(this).find(".fj").removeClass("nuw");
+                    $(this).find(".zj").hide();
+                }
+            )
+        });
     </script>
 
 </div>
@@ -169,62 +226,6 @@
             $("#totalCost").html("￥"+totalCost);
         });
     </script>
-</div>
-
-<!-- 商品分类 -->
-<div th:fragment="category">
-    <div class="menu_bg">
-        <div class="menu">
-            <div class="nav">
-                <div class="nav_t">全部商品分类</div>
-                <div class="leftNav">
-                    <ul>
-                        <li th:each="levelone:${list}">
-                            <div class="fj">
-                                <span class="n_img"></span> <span class="fl" th:text="${levelone.name}"></span>
-                            </div>
-                            <div class="zj">
-                                <div class="zj_l">
-                                    <div class="zj_l_c" th:each="leveltwo:${levelone.children}">
-                                        <h2>
-                                            <a th:href="'/product/list/two/'+${leveltwo.id}" th:text="${leveltwo.name}"></a>
-                                        </h2>
-                                        <a th:href="'/product/list/three/'+${levelthree.id}" th:each="levelthree:${leveltwo.children}" th:text="${levelthree.name}"></a>
-
-                                    </div>
-
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <ul class="menu_r">
-                <li><a href="/ProductCategory/list">首页</a></li>
-                <li th:each="wu:${list}">
-                    <a th:href="'/product/list/one/'+${wu.id}" th:text="${wu.name}">一级分类</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-
-    <script type="text/javascript">
-        $(function(){
-            //商品类目
-            $(".leftNav ul li").hover(
-                function(){
-                    $(this).find(".fj").addClass("nuw");
-                    $(this).find(".zj").show();
-                }
-                ,
-                function(){
-                    $(this).find(".fj").removeClass("nuw");
-                    $(this).find(".zj").hide();
-                }
-            )
-        });
-    </script>
-
 </div>
 
 <!-- 底部 -->

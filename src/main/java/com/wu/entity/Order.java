@@ -8,14 +8,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
-/**
- * <p>
- * 
- * </p>
- *
- * @author 建强
- * @since 2020-05-18
- */
+
 @Data
   @EqualsAndHashCode(callSuper = false)
   @Accessors(chain = true)
@@ -35,7 +28,7 @@ public class Order implements Serializable {
      */
       private Integer userId;
 
-      /**
+      /**我们
      * 用户名
      */
       private String loginName;
@@ -66,6 +59,4 @@ public class Order implements Serializable {
      */
         @TableField(fill = FieldFill.INSERT_UPDATE)
       private LocalDateTime updateTime;
-
-
 }
