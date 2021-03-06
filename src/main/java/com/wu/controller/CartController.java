@@ -60,8 +60,6 @@ public class CartController {
         }else {
             Cart cart = new Cart();
             cart.setProductId(productId).setQuantity(quantity).setCost((float) (productPrice * quantity));
-            //这个地方我们去配一个过滤器,让没有登录的人返回到/ProductCateGroy/list页面,不能加入购物车
-            //过滤器名字UserFilter,还要写个config:FilterConfig,其实我们也可以用spring security只不过我不会
             User user = (User) session.getAttribute("user");
             cart.setUserId(user.getId());
             //添加商品到购物车,并减库存,这里对save方法进行了重写
@@ -81,6 +79,11 @@ public class CartController {
 
     }
 
+    /**
+     * 查看购物车
+     * @param session
+     * @return
+     */
     @GetMapping("/findAllCartVo")
     public ModelAndView findAllCartVoByUserId(HttpSession session){
         ModelAndView modelAndView = new ModelAndView();

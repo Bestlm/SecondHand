@@ -1,22 +1,20 @@
-package com.wu.entity;
+package com.wu.vo;
 
 import com.baomidou.mybatisplus.annotation.*;
-
-import java.time.LocalDateTime;
-import java.io.Serializable;
-import java.util.List;
-
-import com.wu.vo.OrderDetailVO;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+
+import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.util.List;
 
 
 @Data
   @EqualsAndHashCode(callSuper = false)
   @Accessors(chain = true)
 @TableName("orderw")
-public class Order implements Serializable {
+public class OrderVO implements Serializable {
 
     private static final long serialVersionUID=1L;
 
@@ -52,7 +50,13 @@ public class Order implements Serializable {
       private String serialnumber;
 
 
-      /**
+  /**
+   * 保存每个订单的细节
+   */
+  private List<OrderDetailVO> orderDetailVOS;
+
+
+  /**
      * 创建时间
      */
         @TableField(fill = FieldFill.INSERT)

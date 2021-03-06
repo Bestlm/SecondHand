@@ -25,6 +25,7 @@ public class ShiroConfig {
         LinkedHashMap<String,String> filterChainDefinitionMap =new LinkedHashMap<>();
         filterChainDefinitionMap.put("/cart/**","authc");
         filterChainDefinitionMap.put("/orders/**","authc");
+        filterChainDefinitionMap.put("/order/**","authc");
         filterChainDefinitionMap.put("/product/**","authc");
         filterChainDefinitionMap.put("/user/userInfo","authc");
         filterChainDefinitionMap.put("/user/logout","authc");

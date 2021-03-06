@@ -44,8 +44,6 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
 
         if (order.getUserAddress().equals("newAddress")){
             UserAddress userAddress  = new UserAddress();
-            //对新地址进行赋值
-            userAddress.setAddress(address).setRemark(remark).setUserId(user.getId()).setIsdefault(1);
 
             //先把老地址默认值改了
             QueryWrapper queryWrapper = new QueryWrapper();
@@ -54,6 +52,8 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
             oldAdress.setIsdefault(0);
             userAddressMapper.updateById(oldAdress);
 
+            //对新地址进行赋值
+            userAddress.setAddress(address).setRemark(remark).setUserId(user.getId()).setIsdefault(1);
             //把下单操作的地址改成新地址
             order.setUserAddress(address);
 
@@ -62,7 +62,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
         }
 
         order.setUserId(user.getId()).setLoginName(user.getLoginName());
-        //这一步是获取订单编号
+        //这一步是获取订单编号  订单编号  也可以自动生成  比较方便
         String seriaNumber = null;
         try {
             StringBuffer result = new StringBuffer();

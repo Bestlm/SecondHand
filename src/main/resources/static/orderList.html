@@ -19,6 +19,7 @@
                 <div class="left_m_t t_bg1">订单中心</div>
                 <ul>
                     <li><a href="/order/orderList" >我的订单</a></li>
+                    <li><a href="/product/beforepublish" >我要发布</a></li>
                 </ul>
             </div>
             <div class="left_m">
@@ -39,40 +40,12 @@
                    cellspacing="0" cellpadding="0">
                 <tbody>
 
-                <div>
+                <div th:each="orderVO:${productMsg}">
                     <tr class="td_bg">
                         <td >用户名:<span th:text="${session.user.userName}"></span></td>
-                        <td>订单号:<span th:text="${orderMsg.serialnumber}"></span></td>
-                        <td>地址:<span th:text="${orderMsg.userAddress}"></span></td>
-                        <td>￥<span th:text="${orderMsg.cost}"></span></td>
-                    </tr>
-                    <tr>
-                        <td colspan="4">
-                            <table border="0" class="order_tab"
-                                   style="width: 930px; text-align: center; margin-bottom: 30px;"
-                                   cellspacing="0" cellpadding="0">
-                                <tbody>
-                                <tr>
-                                    <td width="20%">商品名称</td>
-                                    <td width="20%">商品图片</td>
-                                    <td width="25%">数量</td>
-                                    <td width="25%">单价</td>
-                                    <td width="25%">总价</td>
-                                </tr>
-
-                                <tr th:each="p2:${productMsg2}" >
-                                    <td th:text="${p2.name}">商品</td>
-                                    <td>
-                                        <img th:src="'/images/'+${p2.fileName}" width="50"
-                                             height="50">
-                                    </td>
-                                    <td th:each="p1:${productMsg1}" th:text="${p1.quantity}">1</td>
-                                    <td th:text="${p2.price}">6000</td>
-                                    <td th:each="p1:${productMsg1}" th:text="${p1.cost}">10000</td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </td>
+                        <td>订单号:<span th:text="${orderVO.serialnumber}"></span></td>
+                        <td>地址:<span th:text="${orderVO.userAddress}"></span></td>
+                        <td>￥<span th:text="${orderVO.cost}"></span></td>
                     </tr>
 
                     <tr>
@@ -88,51 +61,28 @@
                                     <td width="25%">单价</td>
                                     <td width="25%">总价</td>
                                 </tr>
-
-                                <tr>
-                                    <td>商品</td>
+                                <!--遍历订单中所有的商品  有种可能为空的情况-->
+                                <tr th:each="p:${orderVO.orderDetailVOS}" >
+                                    <td th:text="${p.name}"></td>
                                     <td>
-                                        <img src="/images/c_4.jpg" width="50"
+                                        <img th:src="'/images/'+${p.fileName}" width="50"
                                              height="50">
                                     </td>
-                                    <td>1</td>
-                                    <td>6000</td>
-                                    <td>10000</td>
+                                    <!--这里好像有点问题  直接使用VO对象一次性搞定-->
+                                    <td th:text="${p.quantity}"></td>
+                                    <td th:text="${p.price}"></td>
+                                    <td th:text="${p.cost}"></td>
                                 </tr>
+
+
                                 </tbody>
                             </table>
                         </td>
                     </tr>
 
-                    <tr>
-                        <td colspan="4">
-                            <table border="0" class="order_tab"
-                                   style="width: 930px; text-align: center; margin-bottom: 30px;"
-                                   cellspacing="0" cellpadding="0">
-                                <tbody>
-                                <tr>
-                                    <td width="20%">商品名称</td>
-                                    <td width="20%">商品图片</td>
-                                    <td width="25%">数量</td>
-                                    <td width="25%">单价</td>
-                                    <td width="25%">总价</td>
-                                </tr>
-
-                                <tr>
-                                    <td>商品</td>
-                                    <td>
-                                        <img src="/images/c_4.jpg" width="50"
-                                             height="50">
-                                    </td>
-                                    <td>1</td>
-                                    <td>6000</td>
-                                    <td>10000</td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </td>
-                    </tr>
                 </div>
+
+
                 </tbody>
             </table>
         </div>
