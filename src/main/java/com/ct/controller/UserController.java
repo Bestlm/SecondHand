@@ -100,9 +100,11 @@ public class UserController {
             return "register";
         }else{
             String password= user.getPassword();
+
             String md5ofPassword = new MD5Util().getMD5ofStr(password);
             user.setPassword(md5ofPassword);
             log.info("password(MD5)"+md5ofPassword);
+            user.setFileName("10.jpg");
             boolean b = userService.save(user);
             if(b==true){
                 return "login";
