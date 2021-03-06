@@ -2515,13 +2515,18 @@
     .publish_bg {
         width: 100%;
         min-width: 1200px;
-        height: 840px;
+        height: 1000px;
         overflow: hidden;
         background-color: #fff4ef;
         float: right;
     }
 
     .login {
+        width: 1200px;
+        overflow: hidden;
+        margin-top: 45px;
+    }
+    .login10086 {
         width: 1200px;
         overflow: hidden;
         margin-top: 45px;
@@ -2538,6 +2543,23 @@
     .log_c {
         width: 455px;
         height: 500px;
+        overflow: hidden;
+        background-color: #FFF;
+        float: right;
+        display: inline;
+        margin-top: 40px;
+        margin-right: 10px;
+        margin-bottom: 10px;
+        -webkit-box-shadow: 0 0 5px #e0e0e0;
+        -moz-box-shadow: 0 0 5px #e0e0e0;
+        box-shadow: 0 0 5px #e0e0e0;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+    }
+    .log_c10086 {
+        width: 455px;
+        height: 800px;
         overflow: hidden;
         background-color: #FFF;
         float: right;

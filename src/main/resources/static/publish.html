@@ -9,8 +9,8 @@
 
 
 
-<!--    &lt;!&ndash;使用axios来进行异步加载&ndash;&gt;
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>-->
+    <!--    &lt;!&ndash;使用axios来进行异步加载&ndash;&gt;
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>-->
     <!--导入vue-->
 
     <script type="text/javascript" th:src="@{/js/system/publish.js}"/>
@@ -18,75 +18,153 @@
 
 </head>
 <template>
-<body>
+    <body>
 
-<th:block th:include="common.html :: header"></th:block>
+    <th:block th:include="common.html :: header"></th:block>
 
-<div class="publish_bg">
-    <div class="top">
-        <div class="logo"></div>
-    </div>
-    <div class="login">
-        <div class="log_img"><img src="/images/l_img.png" width="611" height="425"/></div>
-        <div class="log_c">
-            <form id="publish_form" method="post">
-                <table border="0" style="width:370px; font-size:14px; margin-top:30px;" cellspacing="0" cellpadding="0">
-                    <tr height="50" valign="top">
-                        <td width="55">&nbsp;</td>
-                        <td>
-                            <span class="fl" style="font-size:24px;">发布商品</span>
-                        </td>
-                    </tr>
-                    <tr height="70">
-                        <td>商品名字</td>
-                        <td><input type="text" name="name" id="name" class="l_user" required/></td>
-                    </tr>
-                    <tr height="70">
-                        <td>商品描述</td>
-                        <td><input type="text" name="description" id="description" class="l_user" required/></td>
-                    </tr>
-                    <tr height="70">
-                        <td>商品库存</td>
-                        <td><input type="number" name="stock" id="stock" class="l_user" required/></td>
-                    </tr>
-                    <tr height="70">
-                        <td>商品价格</td>
-                        <td><input type="number" name="price" id="price" class="l_user" required/></td>
-                    </tr>
-                    <tr height="70">
-                        <td>商品分类</td>
-                        <td>
-                            <div id="test">
-                                <select v-model="UnitSelected" name="categorylevelone_id">
-                                    <option v-for="item in UnitList" :value="item.id" >{{item.name}}</option>
-                                </select>
+    <div class="publish_bg">
+        <div class="top">
+            <div class="logo"></div>
+        </div>
+        <div class="login10086">
+            <div class="log_img"><img src="/images/l_img.png" width="611" height="425"/></div>
+            <div class="log_c10086">
+                <form id="publish_form" method="post" enctype="multipart/form-data">
+                    <table border="0" style="width:370px; font-size:14px; margin-top:30px;" cellspacing="0" cellpadding="0">
+                        <tr height="50" valign="top">
+                            <td width="55">&nbsp;</td>
+                            <td>
+                                <span class="fl" style="font-size:24px;">发布商品</span>
+                            </td>
+                        </tr>
+                        <tr height="70">
+                            <td>商品名字</td>
+                            <td><input type="text" name="name" id="name" class="l_user" required/></td>
+                        </tr>
+                        <tr height="70">
+                            <td>商品描述</td>
+                            <td><input type="text" name="description" id="description" class="l_user" required/></td>
+                        </tr>
+                        <tr height="70">
+                            <td>商品库存</td>
+                            <td><input type="number" name="stock" id="stock" class="l_user" required/></td>
+                        </tr>
+                        <tr height="70">
+                            <td>商品价格</td>
+                            <td><input type="number" name="price" id="price" class="l_user" required/></td>
+                        </tr>
+                        <tr height="70">
+                            <td>商品分类</td>
+                            <td>
+                                <div id="test">
+                                    <select v-model="UnitSelected" name="categorylevelone_id">
+                                        <option v-for="item in UnitList" :value="item.id" >{{item.name}}</option>
+                                    </select>
 
-                                <select v-model="DepartmentSelected" name="categoryleveltwo_id">
-                                    <option v-for="item in DepartmentList" :value="item.id" >{{item.name}}</option>
-                                </select>
+                                    <select v-model="DepartmentSelected" name="categoryleveltwo_id">
+                                        <option v-for="item in DepartmentList" :value="item.id" >{{item.name}}</option>
+                                    </select>
 
-                                <select v-model="UserSelected" name="categorylevelthree_id">
-                                    <option v-for="item in UserList" :value="item.id">{{item.name}}</option>
-                                </select>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr height="60">
-                        <td> </td>
-                        <td><input type="button" id="form_submit" value="发布商品" class="log_btn"></input></td>
-                    </tr>
+                                    <select v-model="UserSelected" name="categorylevelthree_id">
+                                        <option v-for="item in UserList" :value="item.id">{{item.name}}</option>
+                                    </select>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr height="70">
+                            <td></td>
+                            <td>
+                                <div id="choosePic">
+                                    <input class="easyui-filebox" id="file" name="file"
+                                           data-options="prompt:'选择商品图片',onChange:change_photo,buttonText:'&nbsp;选&nbsp;择&nbsp;',required:true"
+                                           style="width:200px">
+                                    <div id="Imgdiv">
+                                        <img id="Img" src=""
+                                             height="190px">
+                                    </div>
+
+                                </div>
+                            </td>
+                        </tr>
+                        <tr height="60">
+                            <td> </td>
+                            <td><input type="button" id="form_submit" value="发布商品" class="log_btn"></input></td>
+                        </tr>
                         <!--发布商品的表单-->
-                </table>
-            </form>
-            <div id="resultInfo" style="color: red"></div>
+                    </table>
+                </form>
+                <div id="resultInfo" style="color: red"></div>
+            </div>
         </div>
     </div>
-</div>
 
-<th:block th:include="common.html :: footer"></th:block>
-<th:block th:include="common.html :: permit"></th:block>
+    <th:block th:include="common.html :: footer"></th:block>
+    <th:block th:include="common.html :: permit"></th:block>
 
-</body>
+    <script>
+        function change_photo(){
+            PreviewImage($("input[name='file']")[0], 'Img', 'Imgdiv');
+        }
+
+        function PreviewImage(fileObj,imgPreviewId,divPreviewId){
+            var allowExtention=".jpg,.bmp,.gif,.png";//允许上传文件的后缀名document.getElementById("hfAllowPicSuffix").value;
+            var extention=fileObj.value.substring(fileObj.value.lastIndexOf(".")+1).toLowerCase();
+            var browserVersion= window.navigator.userAgent.toUpperCase();
+            if(allowExtention.indexOf(extention)>-1){
+                if(fileObj.files){//HTML5实现预览，兼容chrome、火狐7+等
+                    if(window.FileReader){
+                        var reader = new FileReader();
+                        reader.onload = function(e){
+                            document.getElementById(imgPreviewId).setAttribute("src",e.target.result);
+                        }
+                        reader.readAsDataURL(fileObj.files[0]);
+                    }else if(browserVersion.indexOf("SAFARI")>-1){
+                        alert("不支持Safari6.0以下浏览器的图片预览!");
+                    }
+                }else if (browserVersion.indexOf("MSIE")>-1){
+                    if(browserVersion.indexOf("MSIE 6")>-1){//ie6
+                        document.getElementById(imgPreviewId).setAttribute("src",fileObj.value);
+                    }else{//ie[7-9]
+                        fileObj.select();
+                        if(browserVersion.indexOf("MSIE 9")>-1)
+                            fileObj.blur();//不加上document.selection.createRange().text在ie9会拒绝访问
+                        var newPreview =document.getElementById(divPreviewId+"New");
+                        if(newPreview==null){
+                            newPreview =document.createElement("div");
+                            newPreview.setAttribute("id",divPreviewId+"New");
+                            newPreview.style.width = document.getElementById(imgPreviewId).width+"px";
+                            newPreview.style.height = document.getElementById(imgPreviewId).height+"px";
+                            newPreview.style.border="solid 1px #d2e2e2";
+                        }
+                        newPreview.style.filter="progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod='scale',src='" + document.selection.createRange().text + "')";
+                        var tempDivPreview=document.getElementById(divPreviewId);
+                        tempDivPreview.parentNode.insertBefore(newPreview,tempDivPreview);
+                        tempDivPreview.style.display="none";
+                    }
+                }else if(browserVersion.indexOf("FIREFOX")>-1){//firefox
+                    var firefoxVersion= parseFloat(browserVersion.toLowerCase().match(/firefox\/([\d.]+)/)[1]);
+                    if(firefoxVersion>7){//firefox7以下版本
+                        document.getElementById(imgPreviewId).setAttribute("src",window.URL.createObjectURL(fileObj.files[0]));
+                    }else{//firefox7.0+
+                        document.getElementById(imgPreviewId).setAttribute("src",fileObj.files[0].getAsDataURL());
+                    }
+                }else{
+                    document.getElementById(imgPreviewId).setAttribute("src",fileObj.value);
+                }
+            }else{
+                alert("仅支持"+allowExtention+"为后缀名的文件!");
+                fileObj.value="";//清空选中文件
+                if(browserVersion.indexOf("MSIE")>-1){
+                    fileObj.select();
+                    document.selection.clear();
+                }
+                fileObj.outerHTML=fileObj.outerHTML;
+            }
+        }
+
+    </script>
+
+    </body>
 </template>
 </html>
 </html>
