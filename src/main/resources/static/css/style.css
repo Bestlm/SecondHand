@@ -295,7 +295,7 @@
         font-family: "Microsoft YaHei";
         float: left;
         padding: 0 10px;
-        border: 2px solid #FC002A;
+        border: 2px solid #83AF9B;
         border-right: 0;
         outline:0px;
     }
@@ -304,7 +304,7 @@
         width: 90px;
         height: 42px;
         line-height: 40px \9;
-        background-color: #FC002A;
+        background-color: #83AF9B;
         color: #FFF;
         font-size: 16px;
         font-family: "Microsoft YaHei";
@@ -458,8 +458,9 @@
     }
 
     .menu_bg {
-        width: 100%;
-        min-width: 1200px;
+        /*width: 100%;*/
+        width: 1200px;
+        /*min-width: 1200px;*/
         height: 43px;
         border-bottom: 2px solid #ff4e00;
     }
@@ -522,7 +523,7 @@
     .nav {
         width: 211px;
         height: 45px;
-        background-color: #FC002A;
+        background-color: #83AF9B;
         position: absolute;
         left: 0px;
         top: 0;
@@ -679,6 +680,7 @@
         left: 210px;
         top: 0;
         display: none;
+        opacity:0.8;
     }
 
     .leftNav .zj .zj_l {
@@ -715,7 +717,7 @@
 
     .leftNav .zj .zj_l_c a {
         line-height: 22px;
-        font-size: 12px;
+        font-size: 14px;
         font-family: "宋体";
         padding: 0 10px;
         margin: 0;
@@ -2648,7 +2650,6 @@
         padding: 0 10px;
         border: 1px solid #cccccc;
     }
-
     .log_btn {
         width: 318px;
         height: 42px;
@@ -2666,7 +2667,6 @@
         -moz-border-radius: 2px;
         border-radius: 2px;
     }
-
     .regist {
         width: 1200px;
         overflow: hidden;
@@ -5969,6 +5969,112 @@
         -webkit-border-radius: 5px;
         -moz-border-radius: 5px;
         border-radius: 5px;
+    }
+/* error界面*/
+    body {
+        font-family: "Microsoft Yahei", Arial, tahoma, arial !important;
+        color: #666;
+        background-color: #fff;
+        min-width: 320px
+    }
+    h6 {
+        font-size: 100%;
+        font-weight: normal
+    }
+
+    a {
+        text-decoration: none;
+        -webkit-tap-highlight-color: transparent;
+        -webkit-transition: .5s;
+        -moz-transition: .5s;
+        transition: .5s
+    }
+
+    .ct-error-main {
+        position: absolute;
+        width: 100%;
+        height: 333px;
+        left: 0;
+        top: 50%;
+        margin-top: -200px;
+        background: url(../images/line.jpg) no-repeat center 96px;
+        background-size: 100% 175px
+    }
+
+    .w-1200 {
+        width: 1200px;
+        margin: 0 auto;
+        position: relative
+    }
+
+    .ct-error-main .error-l {
+        margin-top: 140px
+    }
+
+    .fl {
+        float: left
+    }
+
+    .clear:after {
+        content: "";
+        clear: both;
+        display: block
+    }
+
+    .ct-error-main .error-l .l-tex a:hover {
+        background-color: #eaeaea
+    }
+
+    .fr {
+        float: right
+    }
+
+    img {
+        display: block
+    }
+
+    .ct-error-main .error-l h1 {
+        float: left
+    }
+
+    .ct-error-main .error-l h1 a {
+        display: block;
+        width: 175px;
+        height: 46px;
+        background: url(../images/404.png) no-repeat
+    }
+
+    .ct-error-main .error-l .l-tex {
+        float: left;
+        padding-left: 35px;
+        margin-left: 35px;
+        border-left: 1px solid rgba(255, 255, 255, .15)
+    }
+
+    .ct-error-main .error-l .l-tex p {
+        color: #fff;
+        font-size: 16px;
+        line-height: 24px
+    }
+
+    .ct-error-main .error-l .l-tex a {
+        display: block;
+        width: 120px;
+        line-height: 34px;
+        text-align: center;
+        font-size: 12px;
+        color: #f66e23;
+        background-color: #fff;
+        -moz-border-radius: 30px;
+        -webkit-border-radius: 30px;
+        border-radius: 30px;
+        margin-top: 10px
+    }
+
+    .ct-error-main .error-l .foot-tex {
+        font-size: 12px;
+        color: #7d7d7d;
+        padding-top: 70px
     }
 
 
