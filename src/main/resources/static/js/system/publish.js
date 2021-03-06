@@ -7,10 +7,10 @@ window.onload=function (ev) {
 
     $('#form_submit').bind('click',function () {
         $('#publish_form').form('submit',{
-            url: root+"/product/publish",
+            url: "/product/publish",
             success:function (data) {
                 alert("保存成功");
-                location.href=root+'/user//userInfo';
+                location.href='/user//userInfo';
             }
         })
 
