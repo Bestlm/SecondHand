@@ -2506,10 +2506,11 @@
     .log_bg {
         width: 100%;
         min-width: 1200px;
-        height: 840px;
+        height: 800px;
         overflow: hidden;
         background-color: #fff4ef;
     }
+
 
     .publish_bg {
         width: 100%;
@@ -2674,22 +2675,23 @@
     }
 
     .reg_c {
-        width: 455px;
-        height: 800px;
-        overflow: hidden;
-        background-color: #FFF;
-        float: right;
-        display: inline;
-        margin-top: 40px;
-        margin-right: 10px;
-        margin-bottom: 10px;
-        -webkit-box-shadow: 0 0 5px #e0e0e0;
-        -moz-box-shadow: 0 0 5px #e0e0e0;
-        box-shadow: 0 0 5px #e0e0e0;
-        -webkit-border-radius: 5px;
-        -moz-border-radius: 5px;
-        border-radius: 5px;
-    }
+         width: 455px;
+         height: 800px;
+         overflow: hidden;
+         background-color: #FFF;
+         float: right;
+         display: inline;
+         margin-top: 40px;
+         margin-right: 10px;
+         margin-bottom: 10px;
+         -webkit-box-shadow: 0 0 5px #e0e0e0;
+         -moz-box-shadow: 0 0 5px #e0e0e0;
+         box-shadow: 0 0 5px #e0e0e0;
+         -webkit-border-radius: 5px;
+         -moz-border-radius: 5px;
+         border-radius: 5px;
+     }
+
 
     /*---------------分类页面---------------*/
     ul.cate {
