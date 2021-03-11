@@ -32,7 +32,7 @@ class CartServiceTest {
         QueryWrapper queryWrapper = new QueryWrapper();
         queryWrapper.eq("user_id",16);
         Order orders = orderService.getOne(queryWrapper);
-        //Order(userAddress=东莞松山湖, cost=17688.0, serialnumber=111085
+        //Order(userAddress=天安门, cost=17688.0, serialnumber=111085
 
 //        //20.根据订单id，查看订单所有商品---order_detail数据库，获得每个商品购买数量、每个商品总价
         List<OrderDetail> orderDetails = new ArrayList<>();

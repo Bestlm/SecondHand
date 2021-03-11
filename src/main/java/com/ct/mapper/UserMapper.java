@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
  *  Mapper 接口
  * </p>
  *
- * @author wustudy
+ * @author 陈腾
  * @since 2020-12-29
  */
 @Mapper

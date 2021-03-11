@@ -9,7 +9,7 @@ import com.ct.entity.User;
  *  服务类
  * </p>
  *
- * @author wustudy
+ * @author 陈腾
  * @since 2020-12-29
  */
 public interface OrderService extends IService<Order> {

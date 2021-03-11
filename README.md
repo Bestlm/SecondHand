@@ -1,7 +1,7 @@
 # SpringBoot+MyBatisPlus+MySQL+thymeleaf电子商城系统
 
 #### 介绍
-Spring Boot+MyBatis Plus+MySQL电子商城系统,你也可后续集成Redis以及登陆验证框架或者接口查看框架
+Spring Boot+MyBatis Plus+MySQL电子商城系统,集成Redis以及shiro
 
 
 #### 使用说明

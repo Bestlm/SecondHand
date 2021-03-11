@@ -8,7 +8,7 @@ import com.ct.entity.OrderDetail;
  *  服务类
  * </p>
  *
- * @author wustudy
+ * @author 陈腾
  * @since 2020-12-29
  */
 public interface OrderDetailService extends IService<OrderDetail> {

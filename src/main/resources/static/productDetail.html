@@ -3,7 +3,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <!-- 自适应-->
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
+    <title>商品详情</title>
 
     <th:block th:replace="common.html :: source"></th:block>
 <!--
@@ -43,7 +45,7 @@
             <div class="des_price">
                  库存：<b id="stock" th:text="${productDetail.stock}" ></b>
             </div>
-            <div class="des_choice">
+           <!-- <div class="des_choice">
                 <span class="fl">型号选择：</span>
                 <ul>
                     <li class="type checked">30ml
@@ -70,7 +72,7 @@
                         <div class="ch_img"></div>
                     </li>
                 </ul>
-            </div>
+            </div>-->
             <br>
             <br>
             <div class="des_join">
@@ -102,29 +104,6 @@
                         <li><a href="#p_details">商品详情</a></li>
                     </ul>
                 </div>
-                <!--<div class="des_con" id="p_attribute">
-                    <table border="0" align="center" style="width:100%; font-family:'宋体'; margin:10px auto;"
-                           cellspacing="0" cellpadding="0">
-                        <tr>
-                            <td>商品名称:手机</td>
-                            <td>商品价格:100</td>
-                            <td>品牌： 迪奥（Dior）</td>
-                            <td>上架时间：2015-09-06 09:19:09 </td>
-                        </tr>
-                        <tr>
-                            <td>商品毛重：160.00g</td>
-                            <td>商品产地：法国</td>
-                            <td>香调：果香调香型：淡香水/香露EDT</td>
-                            <td>&nbsp;</td>
-                        </tr>
-                        <tr>
-                            <td>容量：1ml-15ml </td>
-                            <td>类型：女士香水，Q版香水，组合套装</td>
-                            <td>&nbsp;</td>
-                            <td>&nbsp;</td>
-                        </tr>
-                    </table>
-                </div>-->
                 <!-- 商品属性  暂定用商品描述代替-->
                 <div class="des_con">
                     <b th:text="${productDetail.description}" ></b>

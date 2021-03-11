@@ -35,13 +35,13 @@ public class UserAddressController {
         modelAndView.addObject("userAddressList",userAddressService.list(queryWrapper));
         return modelAndView;
     }
-//地址删除
+    //地址删除
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable("id") Integer id){
         userAddressService.removeById(id);
         return "redirect:/address/userAddressList";
     }
-//地址修改,我没写
+    //地址修改,我没写
     @GetMapping("/update/{id}")
     public String update(@PathVariable("id") Integer id){
         userAddressService.update();
